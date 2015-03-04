@@ -47,6 +47,8 @@ public class HomeWork1 {
 			} else {
 				System.out.println("Неверная команда, повторите");
 			}
+
+			sc.close();
 		}
 	}
 
