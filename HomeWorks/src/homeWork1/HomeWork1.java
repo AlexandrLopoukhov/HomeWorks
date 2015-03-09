@@ -18,7 +18,7 @@ public class HomeWork1 {
 
 		int minSeed = 0;
 
-		int lastNumber = rand.nextInt(maxSeed - minSeed) + minSeed;
+		int lastNumber = (maxSeed - minSeed) / 2 + minSeed;
 
 		int steps = 0;
 
@@ -51,9 +51,8 @@ public class HomeWork1 {
 				}
 
 				if (steps > 7) {
-					System.out.println("Компьютеру не удалось "
-							+ "угадать ваше число за 7 попыток. "
-							+ "Попробуйте еще раз.");
+					System.out
+							.println("Компьютеру не удалось угадать ваше число за 7 попыток. Попробуйте еще раз.");
 					break;
 				}
 			}
