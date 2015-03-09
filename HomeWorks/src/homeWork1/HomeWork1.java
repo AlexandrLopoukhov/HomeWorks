@@ -22,7 +22,8 @@ public class HomeWork1 {
 
 		int steps = 0;
 
-		System.out.println("Загадайте число от 0 до 100. Компьютер попробует отгадать его.");
+		System.out
+				.println("Загадайте число от 0 до 100. Компьютер попробует отгадать его.");
 
 		System.out.println(lastNumber);
 
@@ -45,15 +46,14 @@ public class HomeWork1 {
 						+ " шагов");
 				break;
 			} else if (steps > 7) {
-				System.out.println("Компьютеру не удалось угадать ваше число за 7 попыток. Попробуйте еще раз.");
+				System.out
+						.println("Компьютеру не удалось угадать ваше число за 7 попыток. Попробуйте еще раз.");
 				break;
 			} else {
-			}
 				System.out.println("Неверная команда, повторите");
 			}
-
-			sc.close();
 		}
-	}
 
+		sc.close();
+	}
 }
