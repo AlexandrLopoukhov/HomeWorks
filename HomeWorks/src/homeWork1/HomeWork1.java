@@ -32,12 +32,12 @@ public class HomeWork1 {
 				String userInput = sc.nextLine();
 				if (userInput.equals("less")) {
 					maxSeed = lastNumber;
-					lastNumber = rand.nextInt(maxSeed - minSeed) + minSeed;
+					lastNumber = (maxSeed - minSeed) / 2 + minSeed;
 					System.out.println(lastNumber);
 					steps++;
 				} else if (userInput.equals("more")) {
 					minSeed = lastNumber + 1;
-					lastNumber = rand.nextInt(maxSeed - minSeed) + minSeed;
+					lastNumber = (maxSeed - minSeed) / 2 + minSeed;
 					System.out.println(lastNumber);
 					steps++;
 				} else if (userInput.equals("quit")) {
