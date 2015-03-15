@@ -7,7 +7,7 @@ public class LSDsorting {
 
 	public static void main(String[] args) {
 
-		int[] mass = new int[100];
+		int[] mass = new int[1000];
 		Random random = new Random();
 
 		for (int i = 0; i < mass.length; i++) {
