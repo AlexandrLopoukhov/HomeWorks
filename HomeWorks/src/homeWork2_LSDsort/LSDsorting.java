@@ -12,13 +12,15 @@ public class LSDsorting {
 		Random random = new Random();
 
 		for (int i = 0; i < mass.length; i++) {
-			mass[i] = random.nextInt(10000); // put random numbers from 0 to
-												// 10000
+			mass[i] = random.nextInt(Integer.MAX_VALUE); // put random numbers
+															// from 0 to
+			// 10000
 		}
 
-		for (int i = 0; i < mass.length; i++) {
-			System.out.print(mass[i] + " ");
-		}
+		/*
+		 * for (int i = 0; i < mass.length; i++) { System.out.print(mass[i] +
+		 * " "); }
+		 */
 
 		int[] massDupl1 = mass.clone();
 		int[] massDupl2 = mass.clone();
@@ -35,15 +37,17 @@ public class LSDsorting {
 
 		System.out.println("\n" + "Сортировка методом lsd за время " + timeout1
 				+ " нсек");
-		for (int i = 0; i < mass.length; i++) {
-			System.out.print(massDupl1[i] + " ");
-		}
+		/*
+		 * for (int i = 0; i < mass.length; i++) { System.out.print(massDupl1[i]
+		 * + " "); }
+		 */
 
 		System.out.println("\n" + "Сортировка методом Arrays.sort за время "
 				+ timeout2 + " нсек");
-		for (int i = 0; i < mass.length; i++) {
-			System.out.print(massDupl2[i] + " ");
-		}
+		/*
+		 * for (int i = 0; i < mass.length; i++) { System.out.print(massDupl2[i]
+		 * + " "); }
+		 */
 
 	}
 
