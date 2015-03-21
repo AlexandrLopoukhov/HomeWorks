@@ -1,5 +1,13 @@
 package musicalInstrument;
 
-public class Brass extends Wind {
+public abstract class Brass extends Wind {
+	@Override
+	protected void clean() {
+		polysh();
+		super.clean();
+	}
 
+	private void polysh() {
+		System.out.println("Polysh " + this);
+	}
 }

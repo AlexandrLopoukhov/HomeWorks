@@ -1,5 +1,5 @@
 package musicalInstrument;
 
-public class Wind extends MusicalInstruments {
+public abstract class Wind extends MusicalInstruments {
 
 }

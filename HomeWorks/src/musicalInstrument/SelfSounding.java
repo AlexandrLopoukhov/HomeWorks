@@ -1,5 +1,5 @@
 package musicalInstrument;
 
-public class SelfSounding extends UndefinedTone {
+public abstract class SelfSounding extends UndefinedTone {
 
 }

@@ -1,5 +1,5 @@
 package musicalInstrument;
 
-public class UndefinedTone extends Shock {
+public abstract class UndefinedTone extends Shock {
 
 }
