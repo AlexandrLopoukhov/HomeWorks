@@ -31,14 +31,16 @@ public class Solitaire extends Applet {
     }
 
     public boolean mouseDown(final Event evt, final int x, final int y) {
+        // if TablePile change numberOfCards after select to have right
+        // coordinates
         for (int i = 0; i < 13; i++) {
             if (allPiles[i].includes(x, y)) {
                 allPiles[i].select(x, y);
-                if (allPiles[i] instanceof TablePile) {
-                    ((TablePile) allPiles[i]).numberOfCards--;
-                }
+
                 repaint();
+
                 return true;
+
             }
         }
         return true;

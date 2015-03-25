@@ -3,7 +3,7 @@ package solitaire;
 import java.awt.Graphics;
 
 class TablePile extends CardPile {
-    int numberOfCards;
+    private int numberOfCards;
 
     TablePile(final int x, final int y, final int c) {
         // initialize the parent class
@@ -31,10 +31,9 @@ class TablePile extends CardPile {
     }
 
     public boolean includes(final int tx, final int ty) {
-        // y, x координаты верхнего левого угла карты
+        // y, x - top left angle of card
 
         int tY;
-
         tY = (this.numberOfCards - 1) * 35 + y;
 
         return x <= tx && tx <= x + Card.width && tY <= ty
@@ -56,6 +55,7 @@ class TablePile extends CardPile {
         for (int i = 0; i < 4; i++) {
             if (Solitaire.suitPile[i].canTake(topCard)) {
                 Solitaire.suitPile[i].addCard(topCard);
+                numberOfCards--;
                 return;
             }
         }
@@ -63,6 +63,7 @@ class TablePile extends CardPile {
         for (int i = 0; i < 7; i++) {
             if (Solitaire.tableau[i].canTake(topCard)) {
                 Solitaire.tableau[i].addCard(topCard);
+                numberOfCards--;
                 return;
             }
         }
