@@ -2,8 +2,16 @@ package solitaire;
 
 import java.awt.Graphics;
 
-class TablePile extends CardPile {
+class TablePile extends MovingCardPile {
     private int numberOfCards;
+
+    public int getNumberOfCards() {
+        return numberOfCards;
+    }
+
+    public void setNumberOfCards(final int numberOfCards) {
+        this.numberOfCards = numberOfCards;
+    }
 
     TablePile(final int x, final int y, final int c) {
         // initialize the parent class
@@ -50,25 +58,7 @@ class TablePile extends CardPile {
             topCard.flip();
             return;
         }
-        // else see if any suit pile can take card
-        topCard = pop();
-        for (int i = 0; i < 4; i++) {
-            if (Solitaire.suitPile[i].canTake(topCard)) {
-                Solitaire.suitPile[i].addCard(topCard);
-                numberOfCards--;
-                return;
-            }
-        }
-        // else see if any other table pile can take card
-        for (int i = 0; i < 7; i++) {
-            if (Solitaire.tableau[i].canTake(topCard)) {
-                Solitaire.tableau[i].addCard(topCard);
-                numberOfCards--;
-                return;
-            }
-        }
-        // else put it back on our pile
-        addCard(topCard);
+        super.moveWhenSelect();
     }
 
     private int stackDisplay(final Graphics g, final Card aCard) {
