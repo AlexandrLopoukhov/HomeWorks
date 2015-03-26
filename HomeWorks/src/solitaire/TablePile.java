@@ -41,9 +41,15 @@ class TablePile extends MovingCardPile {
     public boolean includes(final int tx, final int ty) {
         // y, x - top left angle of card
 
+        int counter = 0;
         int tY;
-        tY = (this.numberOfCards - 1) * 35 + y;
 
+        Card tmp = this.top();
+        while (!(tmp.link == null)) {
+            tmp = tmp.link;
+            counter++;
+        }
+        tY = counter * 35 + y;
         return x <= tx && tx <= x + Card.width && tY <= ty
                 && ty <= tY + Card.height;
     }
