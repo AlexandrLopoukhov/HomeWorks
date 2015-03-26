@@ -18,4 +18,11 @@ class DiscardPile extends MovingCardPile {
         }
         super.moveWhenSelect();
     }
+
+    public void rebank() {
+        while (!Solitaire.discardPile.empty()) {
+            Solitaire.deckPile.addCard(pop());
+        }
+
+    }
 }

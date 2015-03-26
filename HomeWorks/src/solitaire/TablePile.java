@@ -3,15 +3,6 @@ package solitaire;
 import java.awt.Graphics;
 
 class TablePile extends MovingCardPile {
-    private int numberOfCards;
-
-    public int getNumberOfCards() {
-        return numberOfCards;
-    }
-
-    public void setNumberOfCards(final int numberOfCards) {
-        this.numberOfCards = numberOfCards;
-    }
 
     TablePile(final int x, final int y, final int c) {
         // initialize the parent class
@@ -20,7 +11,7 @@ class TablePile extends MovingCardPile {
         for (int i = 0; i < c; i++) {
             addCard(Solitaire.deckPile.pop());
         }
-        this.numberOfCards = c;
+
         // flip topmost card face up
         top().flip();
     }
