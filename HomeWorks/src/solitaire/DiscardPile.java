@@ -17,6 +17,7 @@ class DiscardPile extends MovingCardPile {
             return;
         }
         super.moveWhenSelect();
+
     }
 
     public void rebank() {

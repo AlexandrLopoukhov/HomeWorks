@@ -47,4 +47,10 @@ class DeckPile extends CardPile {
         Solitaire.discardPile.addCard(pop());
     }
 
+    @Override
+    public int includesToChoose(final int tx, final int ty) {
+        // TODO Auto-generated method stub
+        return includes(tx, ty) ? 1 : 0;
+    }
+
 }

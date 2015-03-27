@@ -4,6 +4,8 @@ import java.awt.Graphics;
 
 class TablePile extends MovingCardPile {
 
+    public int activeCards = 1;
+
     TablePile(final int x, final int y, final int c) {
         // initialize the parent class
         super(x, y);
@@ -34,15 +36,45 @@ class TablePile extends MovingCardPile {
 
         int counter = 0;
         int tY;
-
-        Card tmp = this.top();
-        while (!(tmp.link == null)) {
-            tmp = tmp.link;
-            counter++;
+        try {
+            Card tmp = this.top();
+            while (!(tmp.link == null)) {
+                tmp = tmp.link;
+                counter++;
+            }
+        } catch (NullPointerException e) {
         }
         tY = counter * 35 + y;
         return x <= tx && tx <= x + Card.width && tY <= ty
                 && ty <= tY + Card.height;
+    }
+
+    public int includesToChoose(final int tx, final int ty) {
+        // y, x - top left angle of card
+        try {
+            Card tmp = this.top();
+
+            if (!tmp.isFaceUp()) {
+                tmp.flip();
+                this.activeCards++;
+            }
+        } catch (NullPointerException e) {
+        }
+
+        int numberOfCard = 0;
+        for (int i = 0; i < activeCards; i++) {
+            if (includes(tx, ty + 35 * i)) {
+                numberOfCard++;
+            }
+        }
+        return numberOfCard;
+    }
+
+    @Override
+    public void addCard(final Card aCard) {
+        // TODO Auto-generated method stub
+        super.addCard(aCard);
+        this.activeCards += Solitaire.numOfChosenCard;
     }
 
     public void select(final int tx, final int ty) {
@@ -56,6 +88,8 @@ class TablePile extends MovingCardPile {
             return;
         }
         super.moveWhenSelect();
+
+        this.activeCards -= Solitaire.numOfChosenCard;
     }
 
     private int stackDisplay(final Graphics g, final Card aCard) {
