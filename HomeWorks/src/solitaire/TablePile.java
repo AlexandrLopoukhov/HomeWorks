@@ -42,30 +42,67 @@ class TablePile extends MovingCardPile {
                 tmp = tmp.link;
                 counter++;
             }
+
         } catch (NullPointerException e) {
         }
+
         tY = counter * 35 + y;
         return x <= tx && tx <= x + Card.width && tY <= ty
                 && ty <= tY + Card.height;
     }
 
-    public int includesToChoose(final int tx, final int ty) {
-        // y, x - top left angle of card
+    public boolean includeForToChoose(final int tx, final int ty,
+            final boolean isFinal) {
+        int counter = 0;
+        int tY;
+
         try {
             Card tmp = this.top();
+            while (!(tmp.link == null)) {
+                if (!tmp.isFaceUp()) {
+                    counter++;
+                }
+                tmp = tmp.link;
+            }
 
+        } catch (NullPointerException e) {
+        }
+
+        tY = counter * 35 + y;
+        if (isFinal == true) {
+            return x <= tx && tx <= x + Card.width && tY <= ty
+                    && ty <= tY + Card.height;
+        }
+        return x <= tx && tx <= x + Card.width && tY <= ty && ty <= tY + 35;
+    }
+
+    public int includesToChoose(final int tx, final int ty) {
+
+        // y, x - top left angle of card
+        // TODO можеть быть есть смысл удаить блок переворачивания
+        try {
+            Card tmp = this.top();
             if (!tmp.isFaceUp()) {
                 tmp.flip();
                 this.activeCards++;
             }
         } catch (NullPointerException e) {
         }
-
+        boolean temp = false;
         int numberOfCard = 0;
+        // int numberOfCard = 0;
         for (int i = 0; i < activeCards; i++) {
-            if (includes(tx, ty + 35 * i)) {
-                numberOfCard++;
+
+            /*
+             * if (includes(tx, ty + 35 * i)) { numberOfCard++; }
+             */
+            if (i == activeCards - 1) {
+                temp = true;
             }
+            if (includeForToChoose(tx, ty + 35 * i, temp)) {
+                numberOfCard = i + 1;
+            }
+
         }
         return numberOfCard;
     }

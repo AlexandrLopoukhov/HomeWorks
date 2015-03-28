@@ -55,11 +55,14 @@ public class Solitaire extends Applet {
             for (int i = 0; i < 13; i++) {
                 if (allPiles[i].includes(x, y)) {
                     if (choosenDeck.equals(i)) {
-                        Card tmpCard = allPiles[choosenDeck].top();
+                        try {
+                            Card tmpCard = allPiles[choosenDeck].top();
+                            for (int j = 0; j < numOfChosenCard; j++) {
+                                tmpCard.unHighlight();
+                                tmpCard = tmpCard.link;
+                            }
 
-                        for (int j = 0; j < numOfChosenCard; j++) {
-                            tmpCard.unHighlight();
-                            tmpCard = tmpCard.link;
+                        } catch (NullPointerException e) {
                         }
 
                         repaint();
@@ -74,6 +77,7 @@ public class Solitaire extends Applet {
                     tmpCard.unHighlight();
                     tmpCard = tmpCard.link;
                 }
+
             } catch (NullPointerException e) {
             }
 
@@ -98,13 +102,16 @@ public class Solitaire extends Applet {
                             tmpCard.highlight();
                             tmpCard = tmpCard.link;
                         }
+
                     } catch (NullPointerException e) {
                     }
+
                     repaint();
                 }
             }
             return true;
         }
+
         return true;
 
         // allPiles[i].select(x, y);

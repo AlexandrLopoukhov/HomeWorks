@@ -96,11 +96,13 @@ class Card {
     }
 
     public void highlight() {
+
         isHighlight = true;
         Solitaire.isChousen = true;
     }
 
     public void unHighlight() {
+
         isHighlight = false;
         Solitaire.isChousen = false;
     }

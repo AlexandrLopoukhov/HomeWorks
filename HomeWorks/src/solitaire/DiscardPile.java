@@ -26,4 +26,10 @@ class DiscardPile extends MovingCardPile {
         }
 
     }
+
+    @Override
+    public int includesToChoose(final int tx, final int ty) {
+        // TODO Auto-generated method stub
+        return includes(tx, ty) ? 1 : 0;
+    }
 }
