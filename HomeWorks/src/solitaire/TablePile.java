@@ -32,23 +32,18 @@ class TablePile extends MovingCardPile {
     }
 
     public boolean includes(final int tx, final int ty) {
-        // y, x - top left angle of card
-
-        int counter = 0;
-        int tY;
-        try {
-            Card tmp = this.top();
-            while (!(tmp.link == null)) {
-                tmp = tmp.link;
-                counter++;
-            }
-
-        } catch (NullPointerException e) {
-        }
-
-        tY = counter * 35 + y;
-        return x <= tx && tx <= x + Card.width && tY <= ty
-                && ty <= tY + Card.height;
+        /*
+         * // y, x - top left angle of card
+         * 
+         * int counter = 0; int tY; try { Card tmp = this.top(); while
+         * (!(tmp.link == null)) { tmp = tmp.link; counter++; }
+         * 
+         * } catch (NullPointerException e) { }
+         * 
+         * tY = counter * 35 + y; return x <= tx && tx <= x + Card.width && tY
+         * <= ty && ty <= tY + Card.height;
+         */
+        return includeForToChoose(tx, ty, true);
     }
 
     public boolean includeForToChoose(final int tx, final int ty,
