@@ -52,16 +52,14 @@ class TablePile extends MovingCardPile {
     }
 
     public boolean includeForToChoose(final int tx, final int ty,
-            final boolean isFinal) {
+            final boolean isFirst) {
         int counter = 0;
         int tY;
 
         try {
             Card tmp = this.top();
             while (!(tmp.link == null)) {
-                if (!tmp.isFaceUp()) {
-                    counter++;
-                }
+                counter++;
                 tmp = tmp.link;
             }
 
@@ -69,7 +67,7 @@ class TablePile extends MovingCardPile {
         }
 
         tY = counter * 35 + y;
-        if (isFinal == true) {
+        if (isFirst == true) {
             return x <= tx && tx <= x + Card.width && tY <= ty
                     && ty <= tY + Card.height;
         }
@@ -96,12 +94,13 @@ class TablePile extends MovingCardPile {
             /*
              * if (includes(tx, ty + 35 * i)) { numberOfCard++; }
              */
-            if (i == activeCards - 1) {
+            if (i == 0) {
                 temp = true;
             }
             if (includeForToChoose(tx, ty + 35 * i, temp)) {
                 numberOfCard = i + 1;
             }
+            temp = false;
 
         }
         return numberOfCard;
