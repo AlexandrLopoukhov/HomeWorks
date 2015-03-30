@@ -6,6 +6,8 @@ package solitaire;
  */
 import java.awt.*;
 import java.applet.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Solitaire extends Applet {
     static CardPile allPiles[];
@@ -16,7 +18,9 @@ public class Solitaire extends Applet {
     static boolean isChousen;// TODO добавить сеттер поменять видимость???
     static int numOfChosenCard = 0;
     static Integer choosenDeck = null;
+    static LinkedList<Card> tmpList = new LinkedList<Card>();
 
+    @Override
     public void init() {
         // first allocate the arrays
         allPiles = new CardPile[13];
@@ -30,10 +34,12 @@ public class Solitaire extends Applet {
         }
         for (int i = 0; i < 7; i++) {
             allPiles[6 + i] = tableau[i] = new TablePile(5 + 55 * i, 80, i + 1);
-
+            // NB!!! set activeCards (faceTop) = 1 in each tablePile after init
+            tableau[i].activeCards = 1;
         }
     }
 
+    @Override
     public boolean mouseDown(final Event evt, final int x, final int y) {
         // if TablePile change numberOfCards after select to have right
         // coordinates
@@ -55,21 +61,37 @@ public class Solitaire extends Applet {
             for (int i = 0; i < 13; i++) {
                 if (allPiles[i].includes(x, y)) {
                     if (choosenDeck.equals(i)) {
-                        try {
-                            Card tmpCard = allPiles[choosenDeck].top();
-                            for (int j = 0; j < numOfChosenCard; j++) {
-                                tmpCard.unHighlight();
-                                tmpCard = tmpCard.link;
-                            }
 
-                        } catch (NullPointerException e) {
-                        }
+                        /*
+                         * try { Card tmpCard = allPiles[choosenDeck].top(); for
+                         * (int j = 0; j < numOfChosenCard; j++) {
+                         * tmpCard.unHighlight(); tmpCard = tmpCard.link; }
+                         * 
+                         * } catch (NullPointerException e) { }
+                         */
+
+                        allPiles[choosenDeck].select(x, y);
+                        Solitaire.tmpList.clear();
 
                         repaint();
-                        allPiles[choosenDeck].select(x, y);
                     }
+                    /*
+                     * } else if ((allPiles[choosenDeck] instanceof TablePile)
+                     * && (choosenDeck != i)) {
+                     * Solitaire.allPiles[choosenDeck].canTake(tmpList.get(0));
+                     * for (int j = 0; j < numOfChosenCard; j++) {
+                     * Solitaire.allPiles[choosenDeck].addCard(tmpList .get(j));
+                     * } Solitaire.tmpList.clear(); repaint(); }
+                     */
+                    /*
+                     * else if (allPiles[choosenDeck] instanceof SuitPile) { }
+                     */
+
+                } else {
+                    Solitaire.tmpList.clear();
                 }
             }
+
             try {
                 Card tmpCard = allPiles[choosenDeck].top();
 
@@ -80,6 +102,8 @@ public class Solitaire extends Applet {
 
             } catch (NullPointerException e) {
             }
+
+            // Solitaire.tmpList.clear();
 
             repaint();
             Solitaire.numOfChosenCard = 0;
@@ -99,8 +123,11 @@ public class Solitaire extends Applet {
                     try {
                         Card tmpCard = allPiles[choosenDeck].top();
                         for (int j = 0; j < numOfChosenCard; j++) {
+
                             tmpCard.highlight();
                             tmpCard = tmpCard.link;
+
+                            // Solitaire.tmpList.add(tmpCard);
                         }
 
                     } catch (NullPointerException e) {
@@ -118,6 +145,7 @@ public class Solitaire extends Applet {
 
     }
 
+    @Override
     public void paint(final Graphics g) {
         for (int i = 0; i < 13; i++) {
             allPiles[i].display(g);

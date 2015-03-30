@@ -18,6 +18,7 @@ class TablePile extends MovingCardPile {
         top().flip();
     }
 
+    @Override
     public boolean canTake(final Card aCard) {
         if (empty()) {
             return aCard.isKing();
@@ -27,14 +28,17 @@ class TablePile extends MovingCardPile {
                 && (aCard.getRank() == topCard.getRank() - 1);
     }
 
+    @Override
     public void display(final Graphics g) {
         stackDisplay(g, top());
     }
 
+    @Override
     public boolean includes(final int tx, final int ty) {
+
+        // y, x - top left angle of card
+
         /*
-         * // y, x - top left angle of card
-         * 
          * int counter = 0; int tY; try { Card tmp = this.top(); while
          * (!(tmp.link == null)) { tmp = tmp.link; counter++; }
          * 
@@ -43,18 +47,23 @@ class TablePile extends MovingCardPile {
          * tY = counter * 35 + y; return x <= tx && tx <= x + Card.width && tY
          * <= ty && ty <= tY + Card.height;
          */
+
         return includeForToChoose(tx, ty, true);
     }
 
     public boolean includeForToChoose(final int tx, final int ty,
             final boolean isFirst) {
+        // TODO идти только вниз, если при опускании попадаем в карту
+        // увеличиваем счетчик + раскоментировать includes
         int counter = 0;
         int tY;
 
         try {
             Card tmp = this.top();
             while (!(tmp.link == null)) {
+
                 counter++;
+
                 tmp = tmp.link;
             }
 
@@ -69,6 +78,7 @@ class TablePile extends MovingCardPile {
         return x <= tx && tx <= x + Card.width && tY <= ty && ty <= tY + 35;
     }
 
+    @Override
     public int includesToChoose(final int tx, final int ty) {
 
         // y, x - top left angle of card
@@ -83,7 +93,7 @@ class TablePile extends MovingCardPile {
         }
         boolean temp = false;
         int numberOfCard = 0;
-        // int numberOfCard = 0;
+
         for (int i = 0; i < activeCards; i++) {
 
             /*
@@ -105,9 +115,11 @@ class TablePile extends MovingCardPile {
     public void addCard(final Card aCard) {
         // TODO Auto-generated method stub
         super.addCard(aCard);
-        this.activeCards += Solitaire.numOfChosenCard;
+        // this.activeCards += Solitaire.numOfChosenCard;
+        this.activeCards++;
     }
 
+    @Override
     public void select(final int tx, final int ty) {
         if (empty()) {
             return;

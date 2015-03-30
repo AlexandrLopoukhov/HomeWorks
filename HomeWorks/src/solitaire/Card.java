@@ -86,7 +86,8 @@ class Card {
             g.drawLine(x + 5, y + 35, x + 45, y + 35);
             g.drawLine(x + 5, y + 50, x + 45, y + 50);
         }
-        if (isHighlight) {
+        if (Solitaire.tmpList.contains(this)) {
+            // isHighlight) {
             g.setColor(Color.red);
             g.drawLine(x, y, x + 50, y);
             g.drawLine(x, y, x, y + 70);
@@ -96,7 +97,7 @@ class Card {
     }
 
     public void highlight() {
-
+        Solitaire.tmpList.add(this);
         isHighlight = true;
         Solitaire.isChousen = true;
     }
