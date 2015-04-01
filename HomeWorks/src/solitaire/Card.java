@@ -20,7 +20,6 @@ class Card {
     private int rank;
     private int suit;
     Card link;
-    boolean isHighlight = false;
 
     // constructor
     Card(final int suitValue, final int rankValue) {
@@ -94,18 +93,6 @@ class Card {
             g.drawLine(x + 50, y, x + 50, y + 70);
             g.drawLine(x, y + 70, x + 50, y + 70);
         }
-    }
-
-    public void highlight() {
-        Solitaire.tmpList.add(this);
-        isHighlight = true;
-        Solitaire.isChousen = true;
-    }
-
-    public void unHighlight() {
-
-        isHighlight = false;
-        Solitaire.isChousen = false;
     }
 
     public boolean isFaceUp() {

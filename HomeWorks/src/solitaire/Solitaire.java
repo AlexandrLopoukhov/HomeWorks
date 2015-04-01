@@ -18,7 +18,6 @@ public class Solitaire extends Applet {
     static SuitPile suitPile[];
     static TablePile tableau[];
     // TODO inner class
-    static boolean isChousen;// TODO delete??? take tmpList.size????
     static int numOfChosenCard = 0;
     static Integer choosenDeck = null;
     static volatile LinkedList<Card> tmpList = new LinkedList<Card>();// TODO
@@ -89,19 +88,16 @@ public class Solitaire extends Applet {
                                     .get(j));
                         }
 
-                    } else if ((allPiles[i] instanceof SuitPile)
-                            && (choosenDeck != i)
-                            && (Solitaire.allPiles[i].canTake(Solitaire.tmpList
-                                    .getFirst()))) {
+                    } else if (((allPiles[i] instanceof SuitPile)
+                            && (choosenDeck != i) && (Solitaire.allPiles[i]
+                                .canTake(Solitaire.tmpList.getFirst())))
+                            || ((allPiles[choosenDeck] instanceof DeckPile) && (allPiles[i] instanceof DiscardPile))) {
                         allPiles[choosenDeck].select(x, y);
                     }
-                    // Solitaire.tmpList.clear();
-
                 }
             }
             Solitaire.tmpList.clear();
             Solitaire.numOfChosenCard = 0;
-            Solitaire.isChousen = false;
             Solitaire.choosenDeck = null;
             repaint();
             // repaint after choose block
@@ -114,7 +110,6 @@ public class Solitaire extends Applet {
                 int tmp = allPiles[i].includesToChoose(x, y);
                 if (tmp > 0) {
                     Solitaire.numOfChosenCard = tmp;
-                    Solitaire.isChousen = true;
                     Solitaire.choosenDeck = i;
                     chooseList();
 

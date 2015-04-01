@@ -23,6 +23,9 @@ class TablePile extends MovingCardPile {
         if (empty()) {
             return aCard.isKing();
         }
+        if (aCard == null) {
+            return false;
+        }
         Card topCard = top();
         return (aCard.color() != topCard.color())
                 && (aCard.getRank() == topCard.getRank() - 1);
