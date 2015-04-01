@@ -113,7 +113,6 @@ class TablePile extends MovingCardPile {
 
     @Override
     public void addCard(final Card aCard) {
-        // TODO Auto-generated method stub
         super.addCard(aCard);
         // this.activeCards += Solitaire.numOfChosenCard;
         this.activeCards++;
@@ -132,7 +131,7 @@ class TablePile extends MovingCardPile {
         }
         super.moveWhenSelect();
 
-        this.activeCards -= Solitaire.numOfChosenCard;
+        // this.activeCards -= Solitaire.numOfChosenCard;
     }
 
     private int stackDisplay(final Graphics g, final Card aCard) {

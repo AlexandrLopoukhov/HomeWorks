@@ -7,7 +7,9 @@ package solitaire;
 import java.awt.*;
 import java.applet.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 public class Solitaire extends Applet {
     static CardPile allPiles[];
@@ -15,11 +17,13 @@ public class Solitaire extends Applet {
     static DiscardPile discardPile;
     static SuitPile suitPile[];
     static TablePile tableau[];
-    static boolean isChousen;// TODO добавить сеттер поменять видимость???
+    // TODO inner class
+    static boolean isChousen;// TODO delete??? take tmpList.size????
     static int numOfChosenCard = 0;
     static Integer choosenDeck = null;
-    static LinkedList<Card> tmpList = new LinkedList<Card>();
+    static volatile LinkedList<Card> tmpList = new LinkedList<Card>();// TODO
 
+    // cardPile
     @Override
     public void init() {
         // first allocate the arrays
@@ -45,104 +49,109 @@ public class Solitaire extends Applet {
         // coordinates
         // TODO рабочий код первой версии
         /*
-         * for (int i = 0; i < 13; i++) { if (allPiles[i].includes(x, y)) {
-         * 
-         * 
-         * // allPiles[i].select(x, y);
-         * 
-         * repaint();
-         * 
-         * return true;
-         * 
-         * } } return true; }
+         * for (int i = 0; i < 13; i++) { if (allPiles[i].includes(x, y)) { //
+         * allPiles[i].select(x, y); repaint(); return true; } } return true; }
          */
 
-        if (isChousen) {
+        if (!Solitaire.tmpList.isEmpty()) {
             for (int i = 0; i < 13; i++) {
                 if (allPiles[i].includes(x, y)) {
+                    // /repack List
                     if (choosenDeck.equals(i)) {
-
-                        /*
-                         * try { Card tmpCard = allPiles[choosenDeck].top(); for
-                         * (int j = 0; j < numOfChosenCard; j++) {
-                         * tmpCard.unHighlight(); tmpCard = tmpCard.link; }
-                         * 
-                         * } catch (NullPointerException e) { }
-                         */
-
+                        // for debug
+                        // for (Card x1 : Solitaire.tmpList) {
+                        // System.out.println(x1.getRank() + " "
+                        // + x1.getSuit() + " "
+                        // + Solitaire.tmpList.indexOf(x1));
+                        // }
+                        System.out.println(tmpList.size());
+                        // //
                         allPiles[choosenDeck].select(x, y);
-                        Solitaire.tmpList.clear();
 
-                        repaint();
+                        // repaint(); delete??? does anof 1 repaint after if
+                        // block????
                     }
-                    /*
-                     * } else if ((allPiles[choosenDeck] instanceof TablePile)
-                     * && (choosenDeck != i)) {
-                     * Solitaire.allPiles[choosenDeck].canTake(tmpList.get(0));
-                     * for (int j = 0; j < numOfChosenCard; j++) {
-                     * Solitaire.allPiles[choosenDeck].addCard(tmpList .get(j));
-                     * } Solitaire.tmpList.clear(); repaint(); }
-                     */
-                    /*
-                     * else if (allPiles[choosenDeck] instanceof SuitPile) { }
-                     */
 
-                } else {
-                    Solitaire.tmpList.clear();
+                    else if ((allPiles[i] instanceof TablePile)
+                            && (choosenDeck != i)
+                            && (Solitaire.allPiles[i].canTake(Solitaire.tmpList
+                                    .getLast()))) {
+                        pickUpList();
+                        // for debug
+                        // for (Card x1 : Solitaire.tmpList) {
+                        // System.out.println(x1.getRank() + " "
+                        // + x1.getSuit() + " "
+                        // + Solitaire.tmpList.indexOf(x1));
+                        // }
+                        // ///
+                        for (int j = numOfChosenCard - 1; j >= 0; j--) {
+                            Solitaire.allPiles[i].addCard(Solitaire.tmpList
+                                    .get(j));
+                        }
+
+                    } else if ((allPiles[i] instanceof SuitPile)
+                            && (choosenDeck != i)
+                            && (Solitaire.allPiles[i].canTake(Solitaire.tmpList
+                                    .getFirst()))) {
+                        allPiles[choosenDeck].select(x, y);
+                    }
+                    // Solitaire.tmpList.clear();
+
                 }
             }
-
-            try {
-                Card tmpCard = allPiles[choosenDeck].top();
-
-                for (int j = 0; j < numOfChosenCard; j++) { //
-                    tmpCard.unHighlight();
-                    tmpCard = tmpCard.link;
-                }
-
-            } catch (NullPointerException e) {
-            }
-
-            // Solitaire.tmpList.clear();
-
-            repaint();
+            Solitaire.tmpList.clear();
             Solitaire.numOfChosenCard = 0;
             Solitaire.isChousen = false;
             Solitaire.choosenDeck = null;
+            repaint();
+            // repaint after choose block
             return true;
 
         }
 
-        if (!isChousen) {
+        if (Solitaire.tmpList.size() == 0) {
             for (int i = 0; i < 13; i++) {
                 int tmp = allPiles[i].includesToChoose(x, y);
                 if (tmp > 0) {
                     Solitaire.numOfChosenCard = tmp;
                     Solitaire.isChousen = true;
                     Solitaire.choosenDeck = i;
-                    try {
-                        Card tmpCard = allPiles[choosenDeck].top();
-                        for (int j = 0; j < numOfChosenCard; j++) {
+                    chooseList();
 
-                            tmpCard.highlight();
-                            tmpCard = tmpCard.link;
-
-                            // Solitaire.tmpList.add(tmpCard);
-                        }
-
-                    } catch (NullPointerException e) {
-                    }
-
-                    repaint();
+                    // repaint();
                 }
             }
+            // repaint after choose block
+            repaint();
+            // for (Card x1 : Solitaire.tmpList) {
+            // System.out.println(x1.getRank() + " " + x1.getSuit() + " "
+            // + Solitaire.tmpList.indexOf(x1) + "cd" + choosenDeck);
+            // }
+            // System.out.println(Solitaire.tmpList.getLast());
             return true;
         }
+        return false;
+    }
 
-        return true;
+    private void chooseList() {
+        try {
+            Card tmpCard = allPiles[choosenDeck].top();
+            for (int j = 0; j < numOfChosenCard; j++) {
+                Solitaire.tmpList.add(tmpCard);
+                tmpCard = tmpCard.link;
+            }
+        } catch (NullPointerException e) {
+        }
+    }
 
-        // allPiles[i].select(x, y);
-
+    private void pickUpList() {
+        tmpList.clear();
+        Card tmpCard;
+        for (int j = 0; j < numOfChosenCard; j++) {
+            tmpCard = allPiles[choosenDeck].pop();
+            // tmpCard.link = null;
+            Solitaire.tmpList.add(tmpCard);
+        }
     }
 
     @Override
