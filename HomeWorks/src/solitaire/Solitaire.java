@@ -46,16 +46,10 @@ public class Solitaire extends Applet {
     public boolean mouseDown(final Event evt, final int x, final int y) {
         // if TablePile change numberOfCards after select to have right
         // coordinates
-        // TODO рабочий код первой версии
-        /*
-         * for (int i = 0; i < 13; i++) { if (allPiles[i].includes(x, y)) { //
-         * allPiles[i].select(x, y); repaint(); return true; } } return true; }
-         */
 
         if (!Solitaire.tmpList.isEmpty()) {
             for (int i = 0; i < 13; i++) {
                 if (allPiles[i].includes(x, y)) {
-                    // /repack List
                     if (choosenDeck.equals(i)) {
                         // for debug
                         // for (Card x1 : Solitaire.tmpList) {
@@ -63,12 +57,9 @@ public class Solitaire extends Applet {
                         // + x1.getSuit() + " "
                         // + Solitaire.tmpList.indexOf(x1));
                         // }
-                        System.out.println(tmpList.size());
-                        // //
+                        // System.out.println(tmpList.size());
+                        //
                         allPiles[choosenDeck].select(x, y);
-
-                        // repaint(); delete??? does anof 1 repaint after if
-                        // block????
                     }
 
                     else if ((allPiles[i] instanceof TablePile)
@@ -100,7 +91,6 @@ public class Solitaire extends Applet {
             Solitaire.numOfChosenCard = 0;
             Solitaire.choosenDeck = null;
             repaint();
-            // repaint after choose block
             return true;
 
         }
@@ -112,17 +102,16 @@ public class Solitaire extends Applet {
                     Solitaire.numOfChosenCard = tmp;
                     Solitaire.choosenDeck = i;
                     chooseList();
-
-                    // repaint();
                 }
             }
-            // repaint after choose block
             repaint();
+            // for debug
             // for (Card x1 : Solitaire.tmpList) {
             // System.out.println(x1.getRank() + " " + x1.getSuit() + " "
             // + Solitaire.tmpList.indexOf(x1) + "cd" + choosenDeck);
             // }
             // System.out.println(Solitaire.tmpList.getLast());
+            //
             return true;
         }
         return false;

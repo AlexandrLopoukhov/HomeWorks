@@ -38,35 +38,17 @@ class TablePile extends MovingCardPile {
 
     @Override
     public boolean includes(final int tx, final int ty) {
-
-        // y, x - top left angle of card
-
-        /*
-         * int counter = 0; int tY; try { Card tmp = this.top(); while
-         * (!(tmp.link == null)) { tmp = tmp.link; counter++; }
-         * 
-         * } catch (NullPointerException e) { }
-         * 
-         * tY = counter * 35 + y; return x <= tx && tx <= x + Card.width && tY
-         * <= ty && ty <= tY + Card.height;
-         */
-
         return includeForToChoose(tx, ty, true);
     }
 
     public boolean includeForToChoose(final int tx, final int ty,
             final boolean isFirst) {
-        // TODO идти только вниз, если при опускании попадаем в карту
-        // увеличиваем счетчик + раскоментировать includes
         int counter = 0;
         int tY;
-
         try {
             Card tmp = this.top();
             while (!(tmp.link == null)) {
-
                 counter++;
-
                 tmp = tmp.link;
             }
 
@@ -98,10 +80,6 @@ class TablePile extends MovingCardPile {
         int numberOfCard = 0;
 
         for (int i = 0; i < activeCards; i++) {
-
-            /*
-             * if (includes(tx, ty + 35 * i)) { numberOfCard++; }
-             */
             if (i == 0) {
                 temp = true;
             }
@@ -109,7 +87,6 @@ class TablePile extends MovingCardPile {
                 numberOfCard = i + 1;
             }
             temp = false;
-
         }
         return numberOfCard;
     }
@@ -117,7 +94,6 @@ class TablePile extends MovingCardPile {
     @Override
     public void addCard(final Card aCard) {
         super.addCard(aCard);
-        // this.activeCards += Solitaire.numOfChosenCard;
         this.activeCards++;
     }
 
@@ -133,8 +109,6 @@ class TablePile extends MovingCardPile {
             return;
         }
         super.moveWhenSelect();
-
-        // this.activeCards -= Solitaire.numOfChosenCard;
     }
 
     private int stackDisplay(final Graphics g, final Card aCard) {
