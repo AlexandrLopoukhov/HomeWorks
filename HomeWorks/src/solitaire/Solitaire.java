@@ -121,9 +121,12 @@ public class Solitaire extends Applet {
         }
         Card tmpCard = allPiles[choosenDeck].top();
         for (int j = 0; j < numOfChosenCard; j++) {
+            System.out.println("su" + tmpCard.getSuit() + "ra"
+                    + tmpCard.getRank());
             Solitaire.tmpList.add(tmpCard);
             tmpCard = tmpCard.link;
         }
+        System.out.println("------------------------------");
 
     }
 

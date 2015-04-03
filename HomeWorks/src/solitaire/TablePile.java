@@ -63,17 +63,18 @@ class TablePile extends MovingCardPile {
 
     @Override
     public int includesToChoose(final int tx, final int ty) {
+        boolean temp = false;
+        int numberOfCard = 0;
+
         if (empty()) {
             return 0;
         }
-        Card tmp = this.top();
-        if (!tmp.isFaceUp()) {
-            tmp.flip();
-            this.activeCards++;
-        }
 
-        boolean temp = false;
-        int numberOfCard = 0;
+        // Card tmp = this.top();
+
+        // if (!tmp.isFaceUp()) {
+        // tmp.flip();
+        // }
 
         for (int i = 0; i < activeCards; i++) {
             if (i == 0) {
