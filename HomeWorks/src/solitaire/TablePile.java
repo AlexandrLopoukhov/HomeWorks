@@ -47,12 +47,17 @@ class TablePile extends MovingCardPile {
         int tY;
         try {
             Card tmp = this.top();
-            while (!(tmp.link == null)) {
-                counter++;
-                tmp = tmp.link;
+            if (tmp == null) {
+                System.out.println("TablePile tmp" + tmp);
+            } else {
+                while (!(tmp.link == null)) {
+                    counter++;
+                    tmp = tmp.link;
+                }
             }
-
         } catch (NullPointerException e) {
+            System.out
+                    .println("Click empty space from TablePile where card can be puting.");
         }
 
         tY = counter * 35 + y;

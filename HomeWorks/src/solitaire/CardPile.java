@@ -8,6 +8,7 @@ class CardPile {
     // coordinates of the card pile
     protected int x;
     protected int y;
+
     CardPile(final int xl, final int yl) {
         x = xl;
         y = yl;
@@ -60,6 +61,9 @@ class CardPile {
     }
 
     public Card top() {
+        if (firstCard == null) {
+            System.out.println("CardPile.top() return firstCard" + firstCard);
+        }
 
         return firstCard;
     }

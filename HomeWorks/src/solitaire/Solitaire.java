@@ -136,11 +136,17 @@ public class Solitaire extends Applet {
     private void chooseList() {
         try {
             Card tmpCard = allPiles[choosenDeck].top();
-            for (int j = 0; j < numOfChosenCard; j++) {
-                Solitaire.tmpList.add(tmpCard);
-                tmpCard = tmpCard.link;
+            if (tmpCard == null) {
+                System.out.println("Solitaire tmpCard is " + tmpCard);
+            } else {
+                for (int j = 0; j < numOfChosenCard; j++) {
+                    Solitaire.tmpList.add(tmpCard);
+                    tmpCard = tmpCard.link;
+                }
             }
         } catch (NullPointerException e) {
+            System.out
+                    .println("Click on empty deck from Solitaire where card can be taken - take null.");
         }
     }
 
@@ -149,7 +155,6 @@ public class Solitaire extends Applet {
         Card tmpCard;
         for (int j = 0; j < numOfChosenCard; j++) {
             tmpCard = allPiles[choosenDeck].pop();
-            // tmpCard.link = null;
             Solitaire.tmpList.add(tmpCard);
         }
     }
