@@ -70,12 +70,6 @@ class TablePile extends MovingCardPile {
             return 0;
         }
 
-        // Card tmp = this.top();
-
-        // if (!tmp.isFaceUp()) {
-        // tmp.flip();
-        // }
-
         for (int i = 0; i < activeCards; i++) {
             if (i == 0) {
                 temp = true;
@@ -83,6 +77,7 @@ class TablePile extends MovingCardPile {
             if (includeForToChoose(tx, ty + 35 * i, temp)) {
                 numberOfCard = i + 1;
             }
+            temp = false;
         }
         return numberOfCard;
     }
