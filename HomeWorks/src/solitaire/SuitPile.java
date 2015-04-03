@@ -7,9 +7,6 @@ class SuitPile extends CardPile {
 
     @Override
     public boolean canTake(final Card aCard) {
-        if (aCard == null) {
-            return false;
-        }
         if (empty()) {
             return aCard.isAce();
         }

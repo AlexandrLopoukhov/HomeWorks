@@ -5,6 +5,7 @@ class DiscardPile extends MovingCardPile {
         super(x, y);
     }
 
+    @Override
     public void addCard(final Card aCard) {
         if (!aCard.isFaceUp()) {
             aCard.flip();
@@ -12,6 +13,7 @@ class DiscardPile extends MovingCardPile {
         super.addCard(aCard);
     }
 
+    @Override
     public void select(final int tx, final int ty) {
         if (empty()) {
             return;
@@ -24,12 +26,10 @@ class DiscardPile extends MovingCardPile {
         while (!Solitaire.discardPile.empty()) {
             Solitaire.deckPile.addCard(pop());
         }
-
     }
 
     @Override
     public int includesToChoose(final int tx, final int ty) {
-        // TODO Auto-generated method stub
         return includes(tx, ty) ? 1 : 0;
     }
 }

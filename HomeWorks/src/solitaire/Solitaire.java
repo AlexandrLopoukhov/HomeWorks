@@ -17,10 +17,9 @@ public class Solitaire extends Applet {
     static DiscardPile discardPile;
     static SuitPile suitPile[];
     static TablePile tableau[];
-    // TODO inner class
     static int numOfChosenCard = 0;
     static Integer choosenDeck = null;
-    static volatile LinkedList<Card> tmpList = new LinkedList<Card>();// TODO
+    static volatile LinkedList<Card> tmpList = new LinkedList<Card>();
     static int chooseX;
     static int chooseY;
 
@@ -47,10 +46,9 @@ public class Solitaire extends Applet {
     @Override
     @Deprecated
     public boolean mouseUp(final Event evt, final int x, final int y) {
-        // TODO Auto-generated method stub
         if (!Solitaire.tmpList.isEmpty()
-                && (Math.abs(chooseX - x) > Card.width)
-                && (Math.abs(chooseY - y) > Card.height)) {
+                && ((Math.abs(chooseX - x) > Card.width / 2) || (Math
+                        .abs(chooseY - y) > Card.height / 2))) {
             return mouseDown(evt, x, y);
         } else {
             return false;
@@ -64,42 +62,29 @@ public class Solitaire extends Applet {
         chooseX = x;
         chooseY = y;
         if (!Solitaire.tmpList.isEmpty()) {
-            for (int i = 0; i < 13; i++) {
+            x: for (int i = 0; i < 13; i++) {
                 if (allPiles[i].includes(x, y)) {
                     if (choosenDeck.equals(i)) {
-                        // for debug
-                        // for (Card x1 : Solitaire.tmpList) {
-                        // System.out.println(x1.getRank() + " "
-                        // + x1.getSuit() + " "
-                        // + Solitaire.tmpList.indexOf(x1));
-                        // }
-                        // System.out.println(tmpList.size());
-                        //
                         allPiles[choosenDeck].select(x, y);
-                    }
-
-                    else if ((allPiles[i] instanceof TablePile)
+                        break x;
+                    } else if ((allPiles[i] instanceof TablePile)
                             && (choosenDeck != i)
                             && (Solitaire.allPiles[i].canTake(Solitaire.tmpList
                                     .getLast()))) {
+                        System.out.println("block2");
                         pickUpList();
-                        // for debug
-                        // for (Card x1 : Solitaire.tmpList) {
-                        // System.out.println(x1.getRank() + " "
-                        // + x1.getSuit() + " "
-                        // + Solitaire.tmpList.indexOf(x1));
-                        // }
-                        // ///
                         for (int j = numOfChosenCard - 1; j >= 0; j--) {
                             Solitaire.allPiles[i].addCard(Solitaire.tmpList
                                     .get(j));
                         }
-
+                        break x;
                     } else if (((allPiles[i] instanceof SuitPile)
-                            && (choosenDeck != i) && (Solitaire.allPiles[i]
-                                .canTake(Solitaire.tmpList.getFirst())))
-                            || ((allPiles[choosenDeck] instanceof DeckPile) && (allPiles[i] instanceof DiscardPile))) {
+                            && (choosenDeck != i)
+                            && (Solitaire.allPiles[i].canTake(Solitaire.tmpList
+                                    .getFirst())) || (allPiles[choosenDeck] instanceof DeckPile))) {
+                        System.out.println("block3");
                         allPiles[choosenDeck].select(x, y);
+                        break x;
                     }
                 }
             }
@@ -108,7 +93,6 @@ public class Solitaire extends Applet {
             Solitaire.choosenDeck = null;
             repaint();
             return true;
-
         }
 
         if (Solitaire.tmpList.size() == 0) {
@@ -121,33 +105,26 @@ public class Solitaire extends Applet {
                 }
             }
             repaint();
-            // for debug
-            // for (Card x1 : Solitaire.tmpList) {
-            // System.out.println(x1.getRank() + " " + x1.getSuit() + " "
-            // + Solitaire.tmpList.indexOf(x1) + "cd" + choosenDeck);
-            // }
-            // System.out.println(Solitaire.tmpList.getLast());
-            //
             return true;
         }
         return false;
     }
 
     private void chooseList() {
-        try {
-            Card tmpCard = allPiles[choosenDeck].top();
-            if (tmpCard == null) {
-                System.out.println("Solitaire tmpCard is " + tmpCard);
-            } else {
-                for (int j = 0; j < numOfChosenCard; j++) {
-                    Solitaire.tmpList.add(tmpCard);
-                    tmpCard = tmpCard.link;
-                }
-            }
-        } catch (NullPointerException e) {
-            System.out
-                    .println("Click on empty deck from Solitaire where card can be taken - take null.");
+        tmpList.clear();
+        if (allPiles[choosenDeck].empty()
+                && allPiles[choosenDeck] instanceof DeckPile) {
+            Solitaire.tmpList.add(null);
         }
+        if (allPiles[choosenDeck].empty()) {
+            return;
+        }
+        Card tmpCard = allPiles[choosenDeck].top();
+        for (int j = 0; j < numOfChosenCard; j++) {
+            Solitaire.tmpList.add(tmpCard);
+            tmpCard = tmpCard.link;
+        }
+
     }
 
     private void pickUpList() {
@@ -156,6 +133,8 @@ public class Solitaire extends Applet {
         for (int j = 0; j < numOfChosenCard; j++) {
             tmpCard = allPiles[choosenDeck].pop();
             Solitaire.tmpList.add(tmpCard);
+            System.out.println("ra" + tmpCard.getRank() + "su"
+                    + tmpCard.getSuit());
         }
     }
 

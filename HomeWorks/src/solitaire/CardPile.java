@@ -61,10 +61,6 @@ class CardPile {
     }
 
     public Card top() {
-        if (firstCard == null) {
-            System.out.println("CardPile.top() return firstCard" + firstCard);
-        }
-
         return firstCard;
     }
 }

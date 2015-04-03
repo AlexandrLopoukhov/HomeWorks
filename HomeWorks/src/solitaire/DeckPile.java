@@ -39,17 +39,18 @@ class DeckPile extends CardPile {
         super.addCard(aCard);
     }
 
+    @Override
     public void select(final int tx, final int ty) {
         if (empty()) {
             Solitaire.discardPile.rebank();
             return;
         }
         Solitaire.discardPile.addCard(pop());
+        System.out.println("deckPile select");
     }
 
     @Override
     public int includesToChoose(final int tx, final int ty) {
-        // TODO Auto-generated method stub
         return includes(tx, ty) ? 1 : 0;
     }
 

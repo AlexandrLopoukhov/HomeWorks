@@ -13,7 +13,6 @@ class TablePile extends MovingCardPile {
         for (int i = 0; i < c; i++) {
             addCard(Solitaire.deckPile.pop());
         }
-
         // flip topmost card face up
         top().flip();
     }
@@ -22,9 +21,6 @@ class TablePile extends MovingCardPile {
     public boolean canTake(final Card aCard) {
         if (empty()) {
             return aCard.isKing();
-        }
-        if (aCard == null) {
-            return false;
         }
         Card topCard = top();
         return (aCard.color() != topCard.color())
@@ -45,19 +41,15 @@ class TablePile extends MovingCardPile {
             final boolean isFirst) {
         int counter = 0;
         int tY;
-        try {
-            Card tmp = this.top();
-            if (tmp == null) {
-                System.out.println("TablePile tmp" + tmp);
-            } else {
-                while (!(tmp.link == null)) {
-                    counter++;
-                    tmp = tmp.link;
-                }
-            }
-        } catch (NullPointerException e) {
-            System.out
-                    .println("Click empty space from TablePile where card can be puting.");
+
+        if (empty()) {
+            return true;
+        }
+
+        Card tmp = this.top();
+        while (!(tmp.link == null)) {
+            counter++;
+            tmp = tmp.link;
         }
 
         tY = counter * 35 + y;
@@ -65,22 +57,21 @@ class TablePile extends MovingCardPile {
             return x <= tx && tx <= x + Card.width && tY <= ty
                     && ty <= tY + Card.height;
         }
+
         return x <= tx && tx <= x + Card.width && tY <= ty && ty <= tY + 35;
     }
 
     @Override
     public int includesToChoose(final int tx, final int ty) {
-
-        // y, x - top left angle of card
-        // TODO можеть быть есть смысл удаить блок переворачивания
-        try {
-            Card tmp = this.top();
-            if (!tmp.isFaceUp()) {
-                tmp.flip();
-                this.activeCards++;
-            }
-        } catch (NullPointerException e) {
+        if (empty()) {
+            return 0;
         }
+        Card tmp = this.top();
+        if (!tmp.isFaceUp()) {
+            tmp.flip();
+            this.activeCards++;
+        }
+
         boolean temp = false;
         int numberOfCard = 0;
 
@@ -91,7 +82,6 @@ class TablePile extends MovingCardPile {
             if (includeForToChoose(tx, ty + 35 * i, temp)) {
                 numberOfCard = i + 1;
             }
-            temp = false;
         }
         return numberOfCard;
     }
@@ -100,6 +90,7 @@ class TablePile extends MovingCardPile {
     public void addCard(final Card aCard) {
         super.addCard(aCard);
         this.activeCards++;
+        System.out.println(this + " " + activeCards);
     }
 
     @Override
