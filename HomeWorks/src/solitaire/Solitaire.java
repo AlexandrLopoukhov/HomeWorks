@@ -21,6 +21,8 @@ public class Solitaire extends Applet {
     static int numOfChosenCard = 0;
     static Integer choosenDeck = null;
     static volatile LinkedList<Card> tmpList = new LinkedList<Card>();// TODO
+    static int chooseX;
+    static int chooseY;
 
     // cardPile
     @Override
@@ -43,10 +45,24 @@ public class Solitaire extends Applet {
     }
 
     @Override
+    @Deprecated
+    public boolean mouseUp(final Event evt, final int x, final int y) {
+        // TODO Auto-generated method stub
+        if (!Solitaire.tmpList.isEmpty()
+                && (Math.abs(chooseX - x) > Card.width)
+                && (Math.abs(chooseY - y) > Card.height)) {
+            return mouseDown(evt, x, y);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public boolean mouseDown(final Event evt, final int x, final int y) {
         // if TablePile change numberOfCards after select to have right
         // coordinates
-
+        chooseX = x;
+        chooseY = y;
         if (!Solitaire.tmpList.isEmpty()) {
             for (int i = 0; i < 13; i++) {
                 if (allPiles[i].includes(x, y)) {
