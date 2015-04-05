@@ -53,4 +53,12 @@ class DeckPile extends CardPile {
         return includes(tx, ty) ? 1 : 0;
     }
 
+    @Override
+    public void chooseList() {
+        if (Solitaire.allPiles[Solitaire.choosenDeck].empty()) {
+            Solitaire.tmpList.add(null);
+        }
+        super.chooseList();
+    }
+
 }

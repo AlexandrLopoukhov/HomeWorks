@@ -63,4 +63,28 @@ class CardPile {
     public Card top() {
         return firstCard;
     }
+
+    public void pickUpList() {
+        Solitaire.tmpList.clear();
+        Card tmpCard;
+        for (int j = 0; j < Solitaire.numOfChosenCard; j++) {
+            tmpCard = Solitaire.allPiles[Solitaire.choosenDeck].pop();
+            Solitaire.tmpList.add(tmpCard);
+        }
+    }
+
+    public void chooseList() {
+        Solitaire.tmpList.clear();
+        if (Solitaire.allPiles[Solitaire.choosenDeck].empty()) {
+            return;
+        }
+        Card tmpCard = Solitaire.allPiles[Solitaire.choosenDeck].top();
+        j: for (int j = 0; j < Solitaire.numOfChosenCard; j++) {
+            Solitaire.tmpList.add(tmpCard);
+            if (tmpCard.link == null) {
+                break j;
+            }
+            tmpCard = tmpCard.link;
+        }
+    }
 }

@@ -70,6 +70,11 @@ class TablePile extends MovingCardPile {
             return numberOfCard;
         }
 
+        if (!this.top().isFaceUp()) {
+            this.top().flip();
+            activeCards++;
+        }
+
         for (int i = 0; i < activeCards; i++) {
             if (i == 0) {
                 temp = true;
@@ -86,7 +91,6 @@ class TablePile extends MovingCardPile {
     public void addCard(final Card aCard) {
         super.addCard(aCard);
         this.activeCards++;
-        System.out.println(this.activeCards);
     }
 
     @Override
@@ -111,5 +115,11 @@ class TablePile extends MovingCardPile {
         localy = stackDisplay(g, aCard.link);
         aCard.draw(g, x, localy);
         return localy + 35;
+    }
+
+    @Override
+    public Card pop() {
+        this.activeCards--;
+        return super.pop();
     }
 }

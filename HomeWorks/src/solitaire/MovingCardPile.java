@@ -7,22 +7,18 @@ public class MovingCardPile extends CardPile {
     }
 
     public void moveWhenSelect() {
-        // Card topCard = pop();
-        Card topCard = top();
         for (int i = 0; i < 4; i++) {
-            if (Solitaire.suitPile[i].canTake(topCard)) {
+            if (Solitaire.suitPile[i].canTake(top())) {
                 Solitaire.suitPile[i].addCard(pop());
                 return;
             }
         }
         for (int i = 0; i < 7; i++) {
-            if (Solitaire.tableau[i].canTake(topCard)) {
+            if (Solitaire.tableau[i].canTake(top())) {
                 Solitaire.tableau[i].addCard(pop());
                 return;
             }
         }
-        // nobody can use it, put it back on our list
-        // addCard(topCard);
     }
 
 }
