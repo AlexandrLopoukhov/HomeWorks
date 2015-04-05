@@ -67,7 +67,7 @@ class TablePile extends MovingCardPile {
         int numberOfCard = 0;
 
         if (empty()) {
-            return 0;
+            return numberOfCard;
         }
 
         for (int i = 0; i < activeCards; i++) {
@@ -86,7 +86,7 @@ class TablePile extends MovingCardPile {
     public void addCard(final Card aCard) {
         super.addCard(aCard);
         this.activeCards++;
-        System.out.println(this + " " + activeCards);
+        System.out.println(this.activeCards);
     }
 
     @Override

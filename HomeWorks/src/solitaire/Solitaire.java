@@ -6,10 +6,7 @@ package solitaire;
  */
 import java.awt.*;
 import java.applet.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 
 public class Solitaire extends Applet {
     static CardPile allPiles[];
@@ -71,7 +68,6 @@ public class Solitaire extends Applet {
                             && (choosenDeck != i)
                             && (Solitaire.allPiles[i].canTake(Solitaire.tmpList
                                     .getLast()))) {
-                        System.out.println("block2");
                         pickUpList();
                         for (int j = numOfChosenCard - 1; j >= 0; j--) {
                             Solitaire.allPiles[i].addCard(Solitaire.tmpList
@@ -82,7 +78,6 @@ public class Solitaire extends Applet {
                             && (choosenDeck != i)
                             && (Solitaire.allPiles[i].canTake(Solitaire.tmpList
                                     .getFirst())) || (allPiles[choosenDeck] instanceof DeckPile))) {
-                        System.out.println("block3");
                         allPiles[choosenDeck].select(x, y);
                         break x;
                     }
@@ -105,9 +100,68 @@ public class Solitaire extends Applet {
                 }
             }
             repaint();
+            // checkVariants();
             return true;
         }
         return false;
+    }
+
+    private int checkVariants() {
+        int countVariants = 0;
+
+        Card tmpCard = deckPile.top();
+        if (!(tmpCard == null)) {
+            while (!(tmpCard.link == null)) {
+                for (int i = 2; i < 13; i++) {
+                    if (allPiles[i].canTake(tmpCard)) {
+                        countVariants++;
+                    }
+                }
+                tmpCard = tmpCard.link;
+            }
+        }
+
+        tmpCard = discardPile.top();
+        if (!(tmpCard == null)) {
+            while (!(tmpCard.link == null)) {
+                for (int i = 2; i < 13; i++) {
+                    if (allPiles[i].canTake(tmpCard)) {
+                        countVariants++;
+                    }
+                }
+                tmpCard = tmpCard.link;
+            }
+        }
+
+        k: for (int i = 0; i < 7; i++) {
+            tmpCard = tableau[i].top();
+            for (int k = 0; k < tableau[i].activeCards; k++) {
+                if (tmpCard == null) {
+                    continue k;
+                }
+                if (k == 0) {
+                    for (int j = 2; j < 13; j++) {
+                        if (allPiles[j].canTake(tmpCard)
+                                && tableau[i].hashCode() != allPiles[j]
+                                        .hashCode()) {
+                            countVariants++;
+                        }
+                        // tmpCard = tmpCard.link;
+                    }
+                }
+                // else {
+                // for (int j = 0; j < 7; j++) {
+                // if (tableau[j].canTake(tmpCard) && j != i) {
+                // countVariants++;
+                // }
+                // }
+                // }
+                tmpCard = tmpCard.link;
+            }
+
+        }
+
+        return countVariants;
     }
 
     private void chooseList() {
@@ -120,14 +174,13 @@ public class Solitaire extends Applet {
             return;
         }
         Card tmpCard = allPiles[choosenDeck].top();
-        for (int j = 0; j < numOfChosenCard; j++) {
-            System.out.println("su" + tmpCard.getSuit() + "ra"
-                    + tmpCard.getRank());
+        j: for (int j = 0; j < numOfChosenCard; j++) {
             Solitaire.tmpList.add(tmpCard);
+            if (tmpCard.link == null) {
+                break j;
+            }
             tmpCard = tmpCard.link;
         }
-        System.out.println("------------------------------");
-
     }
 
     private void pickUpList() {
@@ -136,8 +189,6 @@ public class Solitaire extends Applet {
         for (int j = 0; j < numOfChosenCard; j++) {
             tmpCard = allPiles[choosenDeck].pop();
             Solitaire.tmpList.add(tmpCard);
-            System.out.println("ra" + tmpCard.getRank() + "su"
-                    + tmpCard.getSuit());
         }
     }
 
@@ -145,6 +196,14 @@ public class Solitaire extends Applet {
     public void paint(final Graphics g) {
         for (int i = 0; i < 13; i++) {
             allPiles[i].display(g);
+        }
+        int temp = checkVariants();
+        if (temp > 0) {
+            g.drawString("Возможных ходов " + checkVariants(), 20, 400);
+        } else if (temp == 0) {
+            g.drawString("Возможных ходов больше нет! Но можете поискать =)",
+                    20, 400);
+
         }
     }
 }

@@ -46,7 +46,6 @@ class DeckPile extends CardPile {
             return;
         }
         Solitaire.discardPile.addCard(pop());
-        System.out.println("deckPile select");
     }
 
     @Override
