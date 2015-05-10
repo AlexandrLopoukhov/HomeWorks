@@ -43,7 +43,10 @@ public class CheckerForPokerCombination {
                 result[current]++;
             } else {
                 v = temp[i].getRank();
-                current++;
+                // current++;
+                if (1 < result[current]) {
+                    current++;
+                }
                 if (2 == current) {
                     break;
                 }
@@ -73,4 +76,9 @@ public class CheckerForPokerCombination {
 
     }
 
+    public static boolean isTwoPairs(final Card[] temp) {
+        int[] result = new int[2];
+        result = CheckerForPokerCombination.numberOfSameCard(temp);
+        return (2 == result[0] && 2 == result[1]);
+    }
 }

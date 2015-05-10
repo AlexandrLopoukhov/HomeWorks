@@ -111,4 +111,22 @@ public class testPokerChecker {
         temp[4] = new Card(0, 2);
         assertEquals(false, CheckerForPokerCombination.isFullHouse(temp));
     }
+
+    @Test
+    public void checkTwoPair() {
+        Card[] temp = new Card[5];
+        temp[0] = new Card(3, 5);
+        temp[1] = new Card(3, 3);
+        temp[2] = new Card(2, 1);
+        temp[3] = new Card(1, 5);
+        temp[4] = new Card(0, 3);
+        assertEquals(true, CheckerForPokerCombination.isTwoPairs(temp));
+
+        temp[0] = new Card(3, 5);
+        temp[1] = new Card(3, 3);
+        temp[2] = new Card(2, 5);
+        temp[3] = new Card(1, 1);
+        temp[4] = new Card(0, 2);
+        assertEquals(false, CheckerForPokerCombination.isTwoPairs(temp));
+    }
 }
