@@ -1,7 +1,8 @@
 package solitaire;
 
-class DeckPile extends CardPile {
-    DeckPile(final int x, final int y) {
+public class DeckPile extends CardPile {
+
+    public DeckPile(final int x, final int y) {
         // first initialize parent
         super(x, y);
         // then create the new deck

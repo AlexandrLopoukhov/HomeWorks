@@ -3,7 +3,7 @@ package solitaire;
 import java.awt.Color;
 import java.awt.Graphics;
 
-class Card {
+public class Card {
     final static int black = 1;
     final static int red = 0;
     final static int heart = 0;
@@ -22,7 +22,7 @@ class Card {
     Card link;
 
     // constructor
-    Card(final int suitValue, final int rankValue) {
+    public Card(final int suitValue, final int rankValue) {
         suit = suitValue;
         rank = rankValue;
         faceup = false;
