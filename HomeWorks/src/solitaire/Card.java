@@ -13,8 +13,9 @@ public class Card {
     final static int width = 50;
     final static int height = 70;
     // data fields for colors and suits
-    // private static String names[] = {"A", "2", "3", "4", "5", "6",
-    // "7", "8", "9", "10", "J", "Q", "K"};
+    public static String names[] = { "A", "2", "3", "4", "5", "6", "7", "8",
+            "9", "10", "J", "Q", "K" };
+    public static String suits[] = { "heart", "spade", "diamond", "club" };
     // data fields
     private boolean faceup;
     private int rank;
@@ -36,8 +37,8 @@ public class Card {
     }
 
     public void draw(final Graphics g, final int x, final int y) {
-        String names[] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-                "J", "Q", "K" };
+        // String names[] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+        // "J", "Q", "K" };
         // clear rectangle, draw border
         g.clearRect(x, y, width, height);
         g.setColor(Color.black);
@@ -112,11 +113,11 @@ public class Card {
         return suit;
     }
 
-    final boolean isAce() {
+    public final boolean isAce() {
         return getRank() == 0;
     }
 
-    final boolean isKing() {
+    public final boolean isKing() {
         return getRank() == 12;
     }
 }

@@ -64,11 +64,12 @@ public class CheckerForPokerCombination {
             hand[i] = dp.pop();
         }
         sort(hand, false);
-        System.out.println(numberOfSameCard(hand)[0] + " "
-                + numberOfSameCard(hand)[1]);
         for (int i = 0; i < hand.length; i++) {
-            System.out.println(hand[i].getRank() + " " + hand[i].getSuit());
+            System.out.println(Card.names[hand[i].getRank()] + " "
+                    + Card.suits[hand[i].getSuit()]);
         }
+        System.out.println("----------------------");
+        System.out.println(whatCombination(hand));
 
     }
 
@@ -115,10 +116,6 @@ public class CheckerForPokerCombination {
                             .getRank()))) {
                 return false;
             }
-            // if ((temp[0].getRank() != 0)
-            // && (temp[0].getRank() + 1 != temp[1].getRank())) {
-            // return false;
-            // }
         }
         if (isFlush) {
             return isFlush(temp);
@@ -129,7 +126,37 @@ public class CheckerForPokerCombination {
 
     public static boolean isRoyalFlush(final Card[] temp) {
         sort(temp, true);
-        return (temp[0].getRank() == 0 && isStraight(temp, true) && temp[4]
-                .getRank() == 12);
+        return (temp[0].isAce() && isStraight(temp, true) && temp[4].isKing());
+    }
+
+    public static String whatCombination(final Card[] temp) {
+        if (isRoyalFlush(temp)) {
+            return "RoyalFlush";
+        }
+        if (isStraight(temp, true)) {
+            return "StraightFlush";
+        }
+        if (isFlush(temp)) {
+            return "Flush";
+        }
+        if (isStraight(temp, false)) {
+            return "Straight";
+        }
+        if (isFourOfAKind(temp)) {
+            return "FourOfAKind";
+        }
+        if (isFullHouse(temp)) {
+            return "FullHouse";
+        }
+        if (isSet(temp)) {
+            return "Set";
+        }
+        if (isTwoPairs(temp)) {
+            return "TwoPair";
+        }
+        if (isPair(temp)) {
+            return "Pair";
+        }
+        return "Card";
     }
 }

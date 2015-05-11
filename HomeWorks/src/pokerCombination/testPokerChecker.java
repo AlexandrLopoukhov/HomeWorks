@@ -45,12 +45,14 @@ public class testPokerChecker {
                 { 3, 8, 0, 0, 3, 0, 2, 0, 1, 0, "FourOfAKind" },
                 { 1, 8, 0, 0, 2, 8, 3, 8, 0, 8, "FourOfAKind" },
                 { 0, 0, 0, 2, 1, 5, 2, 3, 1, 0, "Pair" },
-                { 0, 0, 0, 2, 1, 1, 2, 3, 1, 4, "Straight" },
-                { 0, 2, 0, 4, 1, 5, 2, 6, 1, 7, "StraightFail" },// must down
-                { 0, 5, 0, 2, 1, 1, 2, 3, 1, 4, "Straight" },
+                { 0, 0, 0, 2, 1, 1, 2, 3, 1, 4, "Straight" }, // straight A23...
+                { 0, 2, 0, 4, 1, 5, 2, 6, 1, 7, "Card" },
+                { 0, 0, 0, 12, 1, 11, 2, 9, 1, 10, "Straight" },// straight
+                                                                // AKQ...
                 { 1, 0, 1, 2, 1, 1, 1, 3, 1, 4, "StraightFlush" },
                 { 1, 5, 1, 2, 1, 1, 1, 3, 1, 4, "StraightFlush" },
-                { 1, 9, 1, 10, 1, 11, 1, 12, 1, 0, "RoyalFlush" } };
+                { 1, 9, 1, 10, 1, 11, 1, 12, 1, 0, "RoyalFlush" },
+                { 1, 0, 2, 5, 2, 6, 2, 7, 1, 8, "Straight" } };
         return Arrays.asList(data);
     }
 
@@ -177,5 +179,11 @@ public class testPokerChecker {
         } else {
             assertEquals(false, CheckerForPokerCombination.isRoyalFlush(temp));
         }
+    }
+
+    @Test
+    public void checkCombination() {
+        assertEquals(combination,
+                CheckerForPokerCombination.whatCombination(temp));
     }
 }
