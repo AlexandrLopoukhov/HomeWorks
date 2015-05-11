@@ -37,146 +37,145 @@ public class testPokerChecker {
         Object[][] data = new Object[][] {
                 { 0, 1, 2, 2, 0, 1, 1, 2, 1, 5, "TwoPair" },
                 { 1, 3, 1, 5, 0, 5, 2, 1, 2, 3, "TwoPair" },
-                { 0, 3, 0, 2, 1, 3, 2, 3, 1, 2, "FullHouse" } };
+                { 0, 3, 0, 2, 1, 3, 2, 3, 1, 2, "FullHouse" },
+                { 0, 3, 0, 0, 1, 1, 2, 3, 1, 2, "Pair" },
+                { 0, 3, 1, 3, 1, 1, 2, 3, 1, 8, "Set" },
+                { 1, 3, 1, 2, 1, 1, 1, 10, 1, 8, "Flush" },
+                { 0, 8, 0, 0, 2, 8, 2, 3, 1, 8, "Set" },
+                { 3, 8, 0, 0, 3, 0, 2, 0, 1, 0, "FourOfAKind" },
+                { 1, 8, 0, 0, 2, 8, 3, 8, 0, 8, "FourOfAKind" },
+                { 0, 0, 0, 2, 1, 5, 2, 3, 1, 0, "Pair" },
+                { 0, 0, 0, 2, 1, 1, 2, 3, 1, 4, "Straight" },
+                { 0, 2, 0, 4, 1, 5, 2, 6, 1, 7, "StraightFail" },// must down
+                { 0, 5, 0, 2, 1, 1, 2, 3, 1, 4, "Straight" },
+                { 1, 0, 1, 2, 1, 1, 1, 3, 1, 4, "StraightFlush" },
+                { 1, 5, 1, 2, 1, 1, 1, 3, 1, 4, "StraightFlush" },
+                { 1, 9, 1, 10, 1, 11, 1, 12, 1, 0, "RoyalFlush" } };
         return Arrays.asList(data);
     }
 
     @Test
-    public void checkSortByValue2() {
-        // for (int i = 0; i < 5; i++) {
-        // temp[i] = new Card(suit, rank);
-        // }
-        System.out.println(temp[0].getSuit() + " " + temp[0].getRank());
-        // temp[0] = new Card(suit, rank);
-        // temp[1] = new Card(suit, rank);
-        // temp[2] = new Card(suit, rank);
-        // temp[3] = new Card(suit, rank);
-        // temp[4] = new Card(suit, rank);
-        // System.out.println(temp[0].getSuit() + " " + temp[0].getRank());
-        // // System.out.println(temp[1].getSuit() + " " + temp[1].getRank());
-        // // System.out.println(temp[2].getSuit() + " " + temp[2].getRank());
-        // // System.out.println(temp[3].getSuit() + " " + temp[3].getRank());
-        // // System.out.println(temp[4].getSuit() + " " + temp[4].getRank());
-
-    }
-
-    @Test
     public void checkSortByRank() {
-        // for (int i = 0; i < 5; i++) {
-        // temp[i] = new Card(1, 5 - i);
-        // }
         CheckerForPokerCombination.sort(temp, true);
         for (int i = 1; i < 5; i++) {
             assertTrue(temp[i - 1].getRank() <= temp[i].getRank());
-            // assertEquals((i + 1), temp[i].getRank());
         }
     }
 
     @Test
     public void checkSortBySuit() {
-        // temp[0] = new Card(3, 1);
-        // temp[1] = new Card(3, 2);
-        // temp[2] = new Card(2, 3);
-        // temp[3] = new Card(1, 4);
-        // temp[4] = new Card(0, 5);
         CheckerForPokerCombination.sort(temp, false);
         for (int i = 1; i < 5; i++) {
             assertTrue(temp[i - 1].getSuit() <= temp[i].getSuit());
-            // assertEquals((i + 1), temp[i].getRank());
         }
-        // assertEquals(0, temp[0].getSuit());
-        // assertEquals(1, temp[1].getSuit());
-        // assertEquals(2, temp[2].getSuit());
-        // assertEquals(3, temp[3].getSuit());
-        // assertEquals(3, temp[4].getSuit());
     }
 
     @Test
     public void checkNumberOfSameCard() {
         int[] result = new int[2];
-        temp[0] = new Card(3, 2);
-        temp[1] = new Card(3, 2);
-        temp[2] = new Card(2, 3);
-        temp[3] = new Card(1, 3);
-        temp[4] = new Card(0, 5);
         result = CheckerForPokerCombination.numberOfSameCard(temp);
-        assertEquals(2, result[0]);
-
-        temp[0] = new Card(3, 2);
-        temp[1] = new Card(3, 2);
-        temp[2] = new Card(2, 3);
-        temp[3] = new Card(1, 3);
-        temp[4] = new Card(0, 5);
-        result = CheckerForPokerCombination.numberOfSameCard(temp);
-        assertEquals(2, result[0]);
-        assertEquals(2, result[1]);
-
-        temp[0] = new Card(3, 2);
-        temp[1] = new Card(3, 2);
-        temp[2] = new Card(2, 2);
-        temp[3] = new Card(1, 2);
-        temp[4] = new Card(0, 5);
-        result = CheckerForPokerCombination.numberOfSameCard(temp);
-        assertEquals(4, result[0]);
-        assertEquals(1, result[1]);
-
-        temp[0] = new Card(3, 2);
-        temp[1] = new Card(3, 2);
-        temp[2] = new Card(2, 2);
-        temp[3] = new Card(1, 3);
-        temp[4] = new Card(0, 3);
-        result = CheckerForPokerCombination.numberOfSameCard(temp);
-        assertEquals(3, result[0]);
-        assertEquals(2, result[1]);
-
-        temp[0] = new Card(3, 3);
-        temp[1] = new Card(3, 3);
-        temp[2] = new Card(2, 3);
-        temp[3] = new Card(1, 2);
-        temp[4] = new Card(0, 2);
-        result = CheckerForPokerCombination.numberOfSameCard(temp);
-        assertEquals(2, result[0]);
-        assertEquals(3, result[1]);
+        if (combination.equals("TwoPair")) {
+            assertEquals(2, result[0]);
+            assertEquals(2, result[1]);
+        } else if (combination.equals("FullHouse")) {
+            assertEquals(5, result[0] + result[1]);
+        } else if (combination.equals("Pair")) {
+            assertEquals(3, result[0] + result[1]);
+        } else if (combination.equals("Set")) {
+            assertEquals(4, result[0] + result[1]);
+        } else if (combination.equals("FourOfAKind")) {
+            assertEquals(5, result[0] + result[1]);
+        } else {
+            assertEquals(1, result[0]);
+            assertEquals(1, result[1]);
+        }
     }
 
     @Test
     public void checkFullHouse() {
-        temp[0] = new Card(3, 5);
-        temp[1] = new Card(3, 3);
-        temp[2] = new Card(2, 5);
-        temp[3] = new Card(1, 5);
-        temp[4] = new Card(0, 3);
-        assertEquals(true, CheckerForPokerCombination.isFullHouse(temp));
-
-        temp[0] = new Card(3, 3);
-        temp[1] = new Card(3, 5);
-        temp[2] = new Card(2, 3);
-        temp[3] = new Card(1, 5);
-        temp[4] = new Card(0, 3);
-        assertEquals(true, CheckerForPokerCombination.isFullHouse(temp));
-
-        temp[0] = new Card(3, 3);
-        temp[1] = new Card(3, 1);
-        temp[2] = new Card(2, 3);
-        temp[3] = new Card(1, 2);
-        temp[4] = new Card(0, 2);
-        assertEquals(false, CheckerForPokerCombination.isFullHouse(temp));
+        if (combination.equals("FullHouse")) {
+            assertEquals(true, CheckerForPokerCombination.isFullHouse(temp));
+        } else {
+            assertEquals(false, CheckerForPokerCombination.isFullHouse(temp));
+        }
     }
 
     @Test
     public void checkTwoPair() {
-        temp[0] = new Card(3, 5);
-        temp[1] = new Card(3, 3);
-        temp[2] = new Card(2, 1);
-        temp[3] = new Card(1, 5);
-        temp[4] = new Card(0, 3);
-        assertEquals(true, CheckerForPokerCombination.isTwoPairs(temp));
+        if (combination.equals("TwoPair")) {
+            assertEquals(true, CheckerForPokerCombination.isTwoPairs(temp));
+        } else {
+            assertEquals(false, CheckerForPokerCombination.isTwoPairs(temp));
+        }
+    }
 
-        temp[0] = new Card(3, 5);
-        temp[1] = new Card(3, 3);
-        temp[2] = new Card(2, 5);
-        temp[3] = new Card(1, 1);
-        temp[4] = new Card(0, 2);
-        assertEquals(false, CheckerForPokerCombination.isTwoPairs(temp));
+    @Test
+    public void checkPair() {
+        if (combination.equals("Pair")) {
+            assertEquals(true, CheckerForPokerCombination.isPair(temp));
+        } else {
+            assertEquals(false, CheckerForPokerCombination.isPair(temp));
+        }
+    }
+
+    @Test
+    public void checkSet() {
+        if (combination.equals("Set")) {
+            assertEquals(true, CheckerForPokerCombination.isSet(temp));
+        } else {
+            assertEquals(false, CheckerForPokerCombination.isSet(temp));
+        }
+    }
+
+    @Test
+    public void checkFourOfAKind() {
+        if (combination.equals("FourOfAKind")) {
+            assertEquals(true, CheckerForPokerCombination.isFourOfAKind(temp));
+        } else {
+            assertEquals(false, CheckerForPokerCombination.isFourOfAKind(temp));
+        }
+    }
+
+    // //убрать втлрое условие
+    @Test
+    public void checkFlush() {
+        if (combination.equals("Flush") || combination.equals("StraightFlush")
+                || combination.equals("RoyalFlush")) {
+            assertEquals(true, CheckerForPokerCombination.isFlush(temp));
+        } else {
+            assertEquals(false, CheckerForPokerCombination.isFlush(temp));
+        }
+    }
+
+    @Test
+    public void checkStraight() {
+        if (combination.equals("Straight")) {
+            assertEquals(true,
+                    CheckerForPokerCombination.isStraight(temp, false));
+        } else {
+            assertEquals(false,
+                    CheckerForPokerCombination.isStraight(temp, false));
+        }
+    }
+
+    @Test
+    public void checkStraightFlush() {
+        if (combination.equals("StraightFlush")
+                || combination.equals("RoyalFlush")) {
+            assertEquals(true,
+                    CheckerForPokerCombination.isStraight(temp, true));
+        } else {
+            assertEquals(false,
+                    CheckerForPokerCombination.isStraight(temp, true));
+        }
+    }
+
+    @Test
+    public void checkRoyalFlush() {
+        if (combination.equals("RoyalFlush")) {
+            assertEquals(true, CheckerForPokerCombination.isRoyalFlush(temp));
+        } else {
+            assertEquals(false, CheckerForPokerCombination.isRoyalFlush(temp));
+        }
     }
 }
