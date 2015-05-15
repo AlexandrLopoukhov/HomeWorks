@@ -105,9 +105,9 @@ public class testPokerChecker {
     @Test
     public void checkTwoPair() {
         if (combination.equals("TwoPair")) {
-            assertEquals(true, CheckerForPokerCombination.isTwoPairs(temp));
+            assertEquals(true, CheckerForPokerCombination.isTwoPair(temp));
         } else {
-            assertEquals(false, CheckerForPokerCombination.isTwoPairs(temp));
+            assertEquals(false, CheckerForPokerCombination.isTwoPair(temp));
         }
     }
 
@@ -152,11 +152,9 @@ public class testPokerChecker {
     @Test
     public void checkStraight() {
         if (combination.equals("Straight")) {
-            assertEquals(true,
-                    CheckerForPokerCombination.isStraight(temp, false));
+            assertEquals(true, CheckerForPokerCombination.isStraight(temp));
         } else {
-            assertEquals(false,
-                    CheckerForPokerCombination.isStraight(temp, false));
+            assertEquals(false, CheckerForPokerCombination.isStraight(temp));
         }
     }
 
@@ -164,11 +162,10 @@ public class testPokerChecker {
     public void checkStraightFlush() {
         if (combination.equals("StraightFlush")
                 || combination.equals("RoyalFlush")) {
-            assertEquals(true,
-                    CheckerForPokerCombination.isStraight(temp, true));
+            assertEquals(true, CheckerForPokerCombination.isStraightFlush(temp));
         } else {
             assertEquals(false,
-                    CheckerForPokerCombination.isStraight(temp, true));
+                    CheckerForPokerCombination.isStraightFlush(temp));
         }
     }
 
